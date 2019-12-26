@@ -6,8 +6,8 @@ module ActiveAdmin
     module Attributes
       def foreign_methods
         @foreign_methods ||= resource_class.reflect_on_all_associations.
-          select{ |r| r.macro == :belongs_to }.
-          index_by{ |r| r.foreign_key.to_sym }
+          select{ |r| r.class.name.split('::').last.underscore.to_sym == :belongs_to }.
+          index_by{ |r| r.foreign_key }
       end
 
       def primary_col?(c)
